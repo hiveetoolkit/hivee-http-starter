@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+exec iex --sname console --cookie $OTP_COOKIE --remsh $APPLICATION_NAME@$HOSTNAME

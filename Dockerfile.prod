@@ -1,0 +1,51 @@
+FROM elixir:1.9.1-alpine as build
+
+# Install build dependencies
+RUN apk update
+RUN apk upgrade --no-cache
+RUN apk add --no-cache bash
+
+# Prepare build dir
+RUN mkdir /opt/app
+WORKDIR /opt/app
+
+# Install hex + rebar
+RUN mix local.hex --force && mix local.rebar --force
+
+# Set build ENV
+ENV MIX_ENV=prod
+
+# Install mix dependencies
+COPY mix.exs mix.lock ./
+COPY config config
+RUN mix deps.get
+RUN mix deps.compile
+
+# Build project
+COPY priv priv
+COPY lib lib
+COPY script/start-prod script/start-prod
+RUN mix compile
+
+# Build release
+COPY rel rel
+RUN mix distillery.release --verbose
+
+# Prepare release image
+FROM alpine:3.9 AS app
+RUN apk add --update tzdata bash openssl ca-certificates
+
+RUN mkdir /opt/app
+WORKDIR /opt/app
+
+COPY --from=build /opt/app/_build/prod/rel/hivee_http_starter ./
+COPY --from=build /opt/app/script ./script
+
+RUN chown -R nobody: /opt/app
+USER nobody
+
+ENV HOME=/opt/app
+
+EXPOSE ${PORT}
+
+ENTRYPOINT [ "script/start-prod" ]

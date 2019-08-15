@@ -1,0 +1,21 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "workspace",
+  "workspaceFolder": "/workspace",
+  "postCreateCommand": "mix deps.get && mix deps.compile",
+  "extensions": [
+    "pgourlain.erlang",
+    "mjmcloug.vscode-elixir",
+    "iampeterbanjo.elixirlinter",
+    "sammkj.vscode-elixir-formatter",
+    "benvp.vscode-hex-pm-intellisense",
+    "mrorz.language-gettext",
+    "redhat.vscode-yaml",
+    "editorconfig.editorconfig",
+    "foxundermoon.shell-format",
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+    "actboy168.tasks"
+  ]
+}

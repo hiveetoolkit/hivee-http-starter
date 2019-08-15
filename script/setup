@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "Preparing environment..."
+
+echo "Creating environment variables..."
+
+cp .env.example .env
+cp .example.env .dev.env
+cp .example.env .test.env
+cp .example.env .stage.env
+cp .example.env .prod.env
+
+echo ""
+
+echo "Building docker images..."
+
+echo ""
+
+docker-compose build
+
+echo ""
+
+echo "All done!"
+
+echo ""
+
+echo "Run the command below to get started"
+
+echo ""
+
+echo "
+$ make start env=dev
+"

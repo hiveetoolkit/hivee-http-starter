@@ -1,0 +1,30 @@
+FROM elixir:1.9.1-alpine
+
+# Install build dependencies
+RUN apk update
+RUN apk upgrade --no-cache
+RUN apk add --no-cache tzdata bash openssl ca-certificates
+
+# Prepare build dir
+RUN mkdir /opt/app
+WORKDIR /opt/app
+
+# Install hex + rebar
+RUN mix local.hex --force && mix local.rebar --force
+
+# Set build ENV
+ENV MIX_ENV=dev
+
+# Install mix dependencies
+COPY mix.exs mix.lock ./
+COPY config config
+RUN mix deps.get
+RUN mix deps.compile
+
+# Build project
+COPY priv priv
+COPY lib lib
+COPY script script
+RUN mix compile
+
+EXPOSE ${PORT}

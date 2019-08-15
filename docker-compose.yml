@@ -1,0 +1,50 @@
+version: "3.7"
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sleep infinity
+    stop_signal: SIGTERM
+    env_file:
+      - .dev.env
+    volumes:
+      - .:/workspace
+      - ~/.ssh:/root/.ssh
+      - ~/.gitconfig:/root/.gitconfig
+      - vscode-server-volume:/root/.vscode-server
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: script/start-dev
+    stop_signal: SIGTERM
+    ports:
+      - "4000"
+    env_file:
+      - .dev.env
+    volumes:
+      - ./config:/opt/app/config
+      - ./lib:/opt/app/lib
+      - ./priv:/opt/app/priv
+      - ./script:/opt/app/script
+      - ./test:/opt/app/test
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    command: script/start-prod
+    stop_signal: SIGTERM
+    ports:
+      - "5000"
+    env_file:
+      - .prod.env
+  load-balancer:
+    image: nginx:stable-alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+     - "4000:4000"
+     - "5000:5000"
+volumes:
+  vscode-server-volume:

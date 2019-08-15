@@ -1,0 +1,37 @@
+defmodule HiveeHttpStarter.Application do
+  # See https://hexdocs.pm/elixir/Application.html
+  # for more information on OTP Applications
+  @moduledoc false
+
+  use Application
+
+  def start(_type, _args) do
+    # List all child processes to be supervised
+    children = [
+      # Start the endpoint when the application starts
+      HiveeHttpStarterWeb.Endpoint,
+      {Cluster.Supervisor,
+       [
+         Application.fetch_env!(:libcluster, :topologies),
+         [name: HiveeHttpStarterWeb.ClusterSupervisor]
+       ]}
+      # Starts a worker by calling: HiveeHttpStarter.Worker.start_link(arg)
+      # {HiveeHttpStarter.Worker, arg},
+    ]
+
+    {:ok, _} = Logger.add_backend(Sentry.LoggerBackend)
+    Logger.configure_backend(Sentry.LoggerBackend, include_logger_metadata: true)
+
+    # See https://hexdocs.pm/elixir/Supervisor.html
+    # for other strategies and supported options
+    opts = [strategy: :one_for_one, name: HiveeHttpStarter.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
+
+  # Tell Phoenix to update the endpoint configuration
+  # whenever the application is updated.
+  def config_change(changed, _new, removed) do
+    HiveeHttpStarterWeb.Endpoint.config_change(changed, removed)
+    :ok
+  end
+end

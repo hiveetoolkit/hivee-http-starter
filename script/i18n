@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+function new_locale() {
+    if [ -z "$1" ]; then
+        echo "Parameter 'locale' is required!"
+        exit 1
+    else
+        mix gettext.merge priv/gettext --locale $1
+    fi
+}
+
+case $1 in
+"extract") mix gettext.extract --merge ;;
+"new") new_locale $2 ;;
+*) echo "Mode not supported!" && exit 1 ;;
+esac

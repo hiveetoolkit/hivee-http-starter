@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+exec elixir --sname $APPLICATION_NAME --cookie $OTP_COOKIE --no-halt -S mix phx.server

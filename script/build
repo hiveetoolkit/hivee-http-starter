@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+case $1 in
+"workspace") docker-compose build "workspace" ;;
+"dev") docker-compose build "dev" ;;
+"prod") docker-compose build "prod" ;;
+"load-balancer") docker-compose build "load-balancer" ;;
+*) docker-compose build ;;
+esac
