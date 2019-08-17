@@ -7,12 +7,7 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 
-host = System.get_env("HOST") || "0.0.0.0"
-port = String.to_integer(System.get_env("PORT") || "4000")
-
 config :hivee_http_starter, HiveeHttpStarterWeb.Endpoint,
-  url: [host: host, port: port],
-  http: [port: port],
   debug_errors: true,
   code_reloader: true,
   watchers: []

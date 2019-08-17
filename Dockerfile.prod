@@ -3,7 +3,7 @@ FROM elixir:1.9.1-alpine as build
 # Install build dependencies
 RUN apk update
 RUN apk upgrade --no-cache
-RUN apk add --no-cache bash
+RUN apk add --no-cache git bash openssl ca-certificates
 
 # Prepare build dir
 RUN mkdir /opt/app
@@ -15,6 +15,13 @@ RUN mix local.hex --force && mix local.rebar --force
 # Set build ENV
 ENV MIX_ENV=prod
 
+# Copy folders
+COPY config config
+COPY lib lib
+COPY priv priv
+COPY rel rel
+COPY script/start-prod script/start-prod
+
 # Install mix dependencies
 COPY mix.exs mix.lock ./
 COPY config config
@@ -22,13 +29,9 @@ RUN mix deps.get
 RUN mix deps.compile
 
 # Build project
-COPY priv priv
-COPY lib lib
-COPY script/start-prod script/start-prod
 RUN mix compile
 
 # Build release
-COPY rel rel
 RUN mix distillery.release --verbose
 
 # Prepare release image

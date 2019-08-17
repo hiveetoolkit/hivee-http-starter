@@ -6,7 +6,7 @@ config :hivee_http_starter, HiveeHttpStarterWeb.Endpoint,
   http: [port: 4002],
   server: false
 
-# Print only warnings and errors during test
+# Configures the logger
 config :logger, level: :warn
 
 # Configures the sentry integration

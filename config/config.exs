@@ -7,9 +7,13 @@
 # General application configuration
 use Mix.Config
 
+host = System.get_env("HOST") || "0.0.0.0"
+port = String.to_integer(System.get_env("PORT") || "4000")
+
 # Configures the endpoint
 config :hivee_http_starter, HiveeHttpStarterWeb.Endpoint,
-  url: [host: "localhost", port: 80],
+  url: [host: host, port: port],
+  http: [port: port],
   code_reloader: true,
   render_errors: [view: HiveeHttpStarterWeb.ErrorView, accepts: ~w(json)]
 
