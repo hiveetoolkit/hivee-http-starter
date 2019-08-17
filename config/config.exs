@@ -28,14 +28,6 @@ config :phoenix, :json_library, Jason
 # Configures the gettext
 config :gettext, :default_locale, "en_US"
 
-# Configures the cluster formation
-config :libcluster,
-  topologies: [
-    hivee_http_starter: [
-      strategy: Cluster.Strategy.Gossip
-    ]
-  ]
-
 # Configures the sentry integration
 config :sentry,
   dsn: "",

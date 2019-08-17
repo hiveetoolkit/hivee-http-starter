@@ -20,14 +20,6 @@ config :hivee_http_starter, HiveeHttpStarterWeb.Endpoint, server: true
 # Then you can assemble a release by calling `mix release`.
 # See `mix help release` for more information.
 
-# Configures cluster formation
-config :libcluster,
-  topologies: [
-    hivee_http_starter: [
-      strategy: Cluster.Strategy.Gossip
-    ]
-  ]
-
 # Configures the sentry integration
 config :sentry,
   dsn: System.fetch_env!("SENTRY_DSN"),

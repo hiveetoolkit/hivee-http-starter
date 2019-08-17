@@ -9,12 +9,7 @@ defmodule HiveeHttpStarter.Application do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
-      HiveeHttpStarterWeb.Endpoint,
-      {Cluster.Supervisor,
-       [
-         Application.fetch_env!(:libcluster, :topologies),
-         [name: HiveeHttpStarterWeb.ClusterSupervisor]
-       ]}
+      HiveeHttpStarterWeb.Endpoint
       # Starts a worker by calling: HiveeHttpStarter.Worker.start_link(arg)
       # {HiveeHttpStarter.Worker, arg},
     ]

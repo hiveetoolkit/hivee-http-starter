@@ -44,7 +44,6 @@ defmodule HiveeHttpStarter.MixProject do
       {:plug_secex, "~> 0.1.3"},
       {:plug_checkup, "~> 0.5.0"},
       {:sentry, "~> 7.1"},
-      {:libcluster, "~> 3.1"},
       {:distillery, "~> 2.1"},
       {:credo, "~> 1.1", only: [:dev, :test], runtime: false},
       {:coverex, "~> 1.5", only: :test}
