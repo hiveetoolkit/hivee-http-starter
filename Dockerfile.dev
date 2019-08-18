@@ -3,7 +3,7 @@ FROM elixir:1.9.1-alpine
 # Install build dependencies
 RUN apk update
 RUN apk upgrade --no-cache
-RUN apk add --no-cache git tzdata bash openssl ca-certificates
+RUN apk add --no-cache make g++ git tzdata bash openssl ca-certificates
 
 # Prepare build dir
 RUN mkdir /opt/app
@@ -15,17 +15,17 @@ RUN mix local.hex --force && mix local.rebar --force
 # Set build ENV
 ENV MIX_ENV=dev
 
-# Copy folders
+# Install mix dependencies
+COPY mix.exs mix.lock ./
 COPY config config
+RUN mix deps.get
+RUN mix deps.compile
+
+# Copy folders
 COPY lib lib
 COPY priv priv
 COPY script script
 COPY test test
-
-# Install mix dependencies
-COPY mix.exs mix.lock ./
-RUN mix deps.get
-RUN mix deps.compile
 
 # Build project
 RUN mix compile

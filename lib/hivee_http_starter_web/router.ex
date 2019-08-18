@@ -4,6 +4,16 @@ defmodule HiveeHttpStarterWeb.Router do
   use Plug.ErrorHandler
   use Sentry.Plug
 
+  pipeline :metrics do
+    plug BasicAuth, use_config: {:hivee_http_starter, :prometheus_auth}
+  end
+
+  scope "/metrics" do
+    pipe_through :metrics
+
+    forward "/", HiveeHttpStarterWeb.PrometheusExporter
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
 

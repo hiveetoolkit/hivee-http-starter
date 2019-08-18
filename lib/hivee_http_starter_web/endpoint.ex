@@ -20,5 +20,7 @@ defmodule HiveeHttpStarterWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
 
+  plug HiveeHttpStarterWeb.PipelineInstrumenter
+
   plug HiveeHttpStarterWeb.Router
 end
