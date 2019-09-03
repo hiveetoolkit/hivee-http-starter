@@ -4,4 +4,4 @@ set -e
 
 echo "Testing code coverage..."
 
-mix test --cover
+mix coveralls.html
