@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "Reporting code coverage..."
+
+mix coveralls.json
+
+bash <(curl -s https://codecov.io/bash)
