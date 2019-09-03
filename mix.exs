@@ -51,8 +51,8 @@ defmodule HiveeHttpStarter.MixProject do
       {:prometheus_process_collector, "~> 1.3.1"},
       {:sentry, "~> 7.1"},
       {:distillery, "~> 2.1"},
-      {:credo, "~> 1.1", only: [:dev, :test], runtime: false},
-      {:coverex, "~> 1.5", only: :test}
+      {:coverex, "~> 1.5", only: :test, runtime: false},
+      {:credo, "~> 1.1", only: [:dev, :test], runtime: false}
     ]
   end
 end
