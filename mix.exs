@@ -12,8 +12,11 @@ defmodule HiveeHttpStarter.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      test_coverage: [
-        tool: Coverex.Task
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.html": :test,
+        "coveralls.json": :test
       ]
     ]
   end
@@ -51,8 +54,8 @@ defmodule HiveeHttpStarter.MixProject do
       {:prometheus_process_collector, "~> 1.3.1"},
       {:sentry, "~> 7.1"},
       {:distillery, "~> 2.1"},
-      {:coverex, "~> 1.5", only: :test, runtime: false},
-      {:credo, "~> 1.1", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.1", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~> 0.11.2", only: :test, runtime: false}
     ]
   end
 end
