@@ -18,10 +18,6 @@ start-all:
 	@docker-compose up --detach
 .PHONY: start-all
 
-scale:
-	@docker-compose rm -f -s $(env) && docker-compose up --no-recreate --detach --scale $(env)=$(replicas)
-.PHONY: scale
-
 stop:
 	@docker-compose stop $(env)
 .PHONY: stop

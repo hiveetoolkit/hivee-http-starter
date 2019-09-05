@@ -3,6 +3,7 @@ use Mix.Config
 host = System.fetch_env!("HOST")
 port = String.to_integer(System.fetch_env!("PORT"))
 
+# Configures the endpoint
 config :hivee_http_starter, HiveeHttpStarterWeb.Endpoint,
   url: [host: host, port: port],
   http: [:inet6, port: port]

@@ -7,10 +7,6 @@ echo "Preparing environment..."
 echo "Creating environment variables..."
 
 cp .env.example .env
-cp .example.env .dev.env
-cp .example.env .test.env
-cp .example.env .stage.env
-cp .example.env .prod.env
 
 echo ""
 

@@ -6,7 +6,7 @@ config :hivee_http_starter, HiveeHttpStarterWeb.Endpoint,
   http: [port: 4002],
   server: false
 
-# Configures the logger
+# Configures Elixir's Logger level
 config :logger, level: :warn
 
 # Configures the sentry integration
